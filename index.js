@@ -4,6 +4,9 @@ const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy')
 
 app.use(express.urlencoded());
 
@@ -17,12 +20,29 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 
-// use express router
-app.use('/', require('./routes'));
-
 // set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+//The session middleware allows you to store and manage user session data, making it available across multiple requests.
+app.use(session({
+    name: 'codeial',
+    //todo change the secert before deployment in production mode
+    secret:'something',
+    saveUninitialized:false,
+    resave:false,
+    cookie :{
+        maxAge : (1000 * 60 * 100)
+    }
+})
+);
+
+app.use(passport.initialize())
+app.use(passport.session());
+
+
+// use express router
+app.use('/', require('./routes'));
 
 
 app.listen(port, function(err){
