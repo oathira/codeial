@@ -1,2 +1,24 @@
 <link rel="stylesheet" href="/css/home.css">
-        <h1>Home Page</h1>
+<h1>Home Page</h1>
+<section id="feed-post">
+        <h4>Posts</h4>
+        <form action="/posts/create" id="new-post-form" method="POST">
+                <textarea name="content" rows="3" cols="30" placeholder="Type here"></textarea>
+                <input type="submit" value="Post">
+        </form>
+        <div id="post-list-container">
+                <ul>
+                        <% for(post of posts){%>
+                                <p>
+                                        <li><%= post.content%> 
+                                                <br><small><%= post.user.name%></small>
+                                        </li>
+                                </p>
+                               
+                        <%}%>
+                </ul>
+
+      
+        </div>        
+
+</section>
