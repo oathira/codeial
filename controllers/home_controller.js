@@ -7,9 +7,18 @@ const Post = require('../models/post');
 
 module.exports.home = async function(req, res) {
   try {
-    const posts = await Post.find({}). populate('user').exec();
+    //populate the user of each post
+    const posts = await Post.find({})
+    . populate('user')
+    .populate({
+      path: 'comments',
+      populate:{
+        path:'user'
+      }
+    })
+    .exec();//to populate the name because inside post only userid is there use mongoose populate
       return res.render('home',{
-        title:'Home',
+        title:'codeial | Home',
         posts :posts
       });
   }
