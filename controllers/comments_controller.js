@@ -34,44 +34,25 @@ module.exports.create = function(req, res) {
 };
 
 
-// module.exports.create = function(req, res) {
-//     Post.findById(req.body.post,function(err,post){
-//         if(post){
-//             Comment.create({
-//                 content:req.body.content,
-//                 post:req.body.post,
-//                 user :req.user._id
-//             },function(err,comment){
-//                 //handling error;
-
-//                 post.comments.push(comment);
-//                 post.save();
-
-//                 res.redirect('/');
-//             })
-//         }
-//     })
-// }
-// module.exports.create = async function(req, res) {
-//     try {
-//         const post = await Post.findById(req.body.post).exec();
-        
-//         if (post) {
-//             const comment = await Comment.create({
-//                 content: req.body.content,
-//                 post: req.body.post,
-//                 user: req.user._id
-//             });
-
-//             post.comments.push(comment);
-//             await post.save();
-
-//             res.redirect('/');
-//         }
-//     } catch (err) {
-//         // Handle error
-//         console.error(err);
-//         // Respond with an error message or status code
-//         res.status(500).send('An error occurred')
-//     }
-// };
+module.exports.destroy = async function (req, res) {
+    try {
+      const comment = await Comment.findById(req.params.id);
+  
+      if (!comment ) {
+        return res.status(404).send('Comment not found');
+      }
+  
+      if (comment .user == req.user.id) {
+        let postId = comment.post;
+        comment.deleteOne();
+        await Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
+        return res.redirect('back');
+      } else {
+        return res.redirect('back');
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+  };
+  

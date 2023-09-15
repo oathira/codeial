@@ -8,6 +8,6 @@ const commentsController = require('../controllers/comments_controller');
 console.log('post router loaded');
 
 router.post('/create',passport.checkAuthentication,commentsController.create);
-
+router.get('/destroy/:id',passport.checkAuthentication,commentsController.destroy);
  
 module.exports = router;
