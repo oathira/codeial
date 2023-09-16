@@ -1,11 +1,43 @@
 const User = require('../models/user'); // Assuming the User model is imported correctly
 
+module.exports.profile = async function(req, res) {
+  try {
+    const user = await User.findById(req.params.id).exec();
 
-module.exports.profile = function(req, res){
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+
     return res.render('user_profile', {
-        title: 'User Profile'
-    })
-}
+      title: 'User Profile',
+      user: req.user,
+      profile_user: user
+    });
+  } catch (err) {
+    console.error('Error in finding user:', err);
+    return res.status(500).send('Internal Server Error');
+  }
+};
+
+module.exports.update = async function(req, res) {
+  try {
+    if (req.user.id == req.params.id) {
+      const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+      if (!updatedUser) {
+        return res.status(404).send('User not found');
+      }
+
+      return res.redirect('back');
+    } else {
+      return res.status(401).send('Unauthorized');
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send('Internal Server Error');
+  }
+};
 
 
 // render the sign up page
