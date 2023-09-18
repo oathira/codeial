@@ -3,7 +3,7 @@
   <ul class="header-items">
       <% if(locals.user){ %>
         <li class="sign">
-            <a href="/users/profile"><%= user.name %></a>
+            <a href="/users/profile/<%= user._id%>"><%= user.name %></a>
         </li>
           <li class="sign">
               <a href="/users/sign-out">Sign Out</a>

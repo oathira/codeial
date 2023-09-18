@@ -15,11 +15,11 @@ const User = require('../models/user');
           populate: {
             path: 'user'
           }
-        })
-        .exec();
+        });
+   
   
       // Find all users
-      const users = await User.find({}).exec();
+      const users = await User.find({});
   
       return res.render('home', {
         title: 'codeial | Home',
@@ -28,7 +28,7 @@ const User = require('../models/user');
       });
     } catch (err) {
       console.error('Error in creating post:', err);
-      return res.status(500).send('Internal Server Error');
+      return ;
     }
   };
   

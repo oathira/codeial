@@ -4,7 +4,7 @@ const Comment = require('../models/comment');
 
 module.exports.create = async function(req, res) {
   try {
-    const post = await Post.create({
+     await Post.create({
       content: req.body.content,
       user: req.user._id
     });
@@ -12,7 +12,7 @@ module.exports.create = async function(req, res) {
     return res.redirect('back');
   } catch (err) {
     console.error('Error in creating post:', err);
-    return res.status(500).send('Internal Server Error');
+    return ;
   }
 }
 
