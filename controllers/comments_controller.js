@@ -13,11 +13,12 @@ module.exports.create = async function(req, res) {
     });
      post.comments.push(comment); // Use the variable to access the post
      post.save();//whenever update the data is saved in database
-     res.redirect('/');
+     req.flash('success','comment added');
+     return res.redirect('back');
     }
  }
   catch(err) {
-      console.log('error',err);
+    req.flash('error',err);
       return;
         };
 };
@@ -35,6 +36,7 @@ module.exports.destroy = async function (req, res) {
         let postId = comment.post;
         comment.deleteOne();
         await Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
+        req.flash('success','comment removed');
         return res.redirect('back');
       } else {
         return res.redirect('back');

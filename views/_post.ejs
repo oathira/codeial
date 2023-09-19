@@ -1,9 +1,9 @@
-<li>
+<li id="post-<%=post._id%>">
     <p>     
         <!-- user.id gets the string of user._id and user._id is of type ObjectId -->
             <% if(locals.user && locals.user.id == post.user.id){%>
                  <small>
-                    <a href="/posts/destroy/<%=post.id%>">x</a>
+                    <a class="delete-post-button" href="/posts/destroy/<%=post.id%>">x</a>
                  <small>
             <%}%>
             <%= post.content%> 

@@ -28,7 +28,7 @@ module.exports.update = async function(req, res) {
       if (!updatedUser) {
         return res.status(404).send('User not found');
       }
-
+      req.flash('success','profile updated');
       return res.redirect('back');
     } else {
       return res.status(401).send('Unauthorized');
