@@ -9,6 +9,7 @@ const User = require('../models/user');
     try {
       // Populate the user of each post and their comments' users
       const posts = await Post.find({})
+      .sort('-createdAt')
         .populate('user')
         .populate({
           path: 'comments',
