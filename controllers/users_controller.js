@@ -1,5 +1,6 @@
 const User = require('../models/user'); // Assuming the User model is imported correctly
-
+const fs = require('fs');
+const path = require('path');
 module.exports.profile = async function(req, res) {
   try {
     const user = await User.findById(req.params.id).exec();
@@ -21,22 +22,40 @@ module.exports.profile = async function(req, res) {
 };
 
 module.exports.update = async function(req, res) {
-  try {
-    if (req.user.id == req.params.id) {
-      const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
-      if (!updatedUser) {
-        return res.status(404).send('User not found');
-      }
-      req.flash('success','profile updated');
+  if (req.user.id == req.params.id){
+    try {
+  
+      const user = await User.findById(req.params.id);
+      console.log(user);
+      User.uploadedAvatar (req,res,function(err){
+        if (err) {
+          console.log('multer error',err);
+        }
+        console.log(req.file);
+        user.name = req.body.name;
+        user.email = req.body.email;
+        if(req.file){
+          //this is saving the path of the uploaded file into avatar field in the user
+          if(user.avatar){
+              fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+          }
+          console.log(User.avatarPath );
+          user.avatar = User.avatarPath +'/'+ req.file.filename;
+        }
+        user.save();
+        req.flash('success','profile updated');
       return res.redirect('back');
-    } else {
-      return res.status(401).send('Unauthorized');
-    }
-  } catch (err) {
-    console.error(err);
+      });
+      
+    } 
+  catch (err) {
+    req.flash('error',err);
     return res.status(500).send('Internal Server Error');
   }
+  }else {
+    return res.status(401).send('Unauthorized');
+  }
+ 
 };
 
 

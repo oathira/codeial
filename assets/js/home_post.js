@@ -74,5 +74,66 @@
         })
 
     }
-   createPost();
+
+//      //Create Commnet
+//      let createCommment = function(){
+//         let newCommentform = $('#new-comments-form');
+//         newCommentform.submit(function(e){
+//             e.preventDefault();
+
+//             $.ajax({
+//                 type:'post',
+//                 url:'/comments/create',
+//                 data:newCommentform.serialize(),
+//                 success:function(data){
+//                     console.log(data.data.comment);
+//                     let newComment = newCreateCommentDom(data.data.comment);
+//                     $(`#post-comments-list>ol`).prepend(newComment);
+//                     commentDelete($(` .delete-comment`).newComment);                                                
+//                 },error:function(err){
+//                     console.log(err.responseText);
+//                 }
+//             })
+//         })
+// }
+
+// // Method to Comment delete Ajax
+// let newCreateCommentDom = function(comment){
+//     console.log(comment);
+//         return $(`<li id="comment-${comment._id}"> 
+
+//         <small>
+//         ${comment.user.name}
+//         </small>
+//                 <small>
+//                         <a
+//                                 href="/comments/destroy/${ comment.id }">
+//                                 <button>delete</button></a>
+//                 </small>
+//                         <p>
+//                         ${comment.content}
+//                         </p>
+//                     </li>
+//     `)
+// }
+
+// let commentDelete = function(deleteLink){
+//     $(deleteLink).click(function(e){
+//         e.preventDefault();
+//         $.ajax({
+//             type:'get',
+//             url:$(deleteLink).prop('href'),
+//             success:function(data){
+//                 $(`comment-${data.data.comment_id}`).remove();
+//             },error:function(err){
+//                 console.log(err.responseText);
+//             }
+//         })
+//     })
+// }
+
+// createCommment();
+createPost();
+
 }
+  
