@@ -8,7 +8,8 @@ h1{
 }
 #home-container{
     display:flex;
-    #feed-post{
+
+    #feed-posts{
         width:70%;
         padding:10px;
     }
@@ -17,5 +18,6 @@ h1{
         padding :10px;
         border-left:1px solid lightgray;
         height:100vh;
+        ;
     }
 }

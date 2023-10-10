@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //connecting library
-mongoose.connect('mongodb://127.0.0.1:27017/codeial_development');
+mongoose.connect('mongodb://127.0.0.1:27017/codeial_development',{ useNewUrlParser: true, useUnifiedTopology: true });
 
 //acquiring the connection (to check its sucessful)
 const db=mongoose.connection;
