@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const env = require('./environment');
 
 //connecting library
-mongoose.connect('mongodb://127.0.0.1:27017/codeial_development',{ useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb://127.0.0.1:27017/${env.db}`);
 
 //acquiring the connection (to check its sucessful)
 const db=mongoose.connection;
